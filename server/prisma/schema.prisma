@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  username     String         @unique
+  email        String         @unique
+  password     String
+  activation   Boolean
+  role         Role           @default(USER)
+  Token        Token[]
+  Activation   Activation?
+  Cart         Cart?
+  Order        Order[]
+  UserComments UserComments[]
+}
+
+model Token {
+  id           Int     @id @default(autoincrement())
+  userId       Int
+  refreshToken String
+  userIp       String?
+  User         User    @relation(fields: [userId], references: [id])
+}
+
+model Activation {
+  id     Int    @id @default(autoincrement())
+  userId Int    @unique
+  link   String
+  User   User   @relation(fields: [userId], references: [id])
+}
+
+//cart schema
+model Cart {
+  id          Int        @id @default(autoincrement())
+  userId      Int        @unique
+  totalAmount Int        @default(0)
+  User        User       @relation(fields: [userId], references: [id])
+  CartItem    CartItem[]
+}
+
+model CartItem {
+  id       Int  @id @default(autoincrement())
+  itemId   Int
+  cartId   Int
+  quantity Int
+  Cart     Cart @relation(fields: [cartId], references: [id])
+  Item     Item @relation(fields: [itemId], references: [id])
+}
+
+//order schema
+model Order {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  totalAmount Int         @default(0)
+  status      OrderStatus
+  paymentId   String?
+
+  items Json
+
+  city        String
+  phoneNumber String
+  postalCode  String
+  address     String
+  name        String
+
+  createAt DateTime @default(now())
+}
+
+//comments schema
+model UserComments {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  itemId  Int
+  title   String
+  content String
+  User    User   @relation(fields: [userId], references: [id])
+  Item    Item   @relation(fields: [itemId], references: [id])
+}
+
+//item schema
+model Item {
+  id           Int            @id @default(autoincrement())
+  name         String
+  category     Category       @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+  image        String[]
+  brand        Brand          @relation(fields: [brandId], references: [id])
+  brandId      Int
+  price        Float
+  available    Int
+  ItemInfo     ItemInfo[]
+  UserComments UserComments[]
+  CartItem     CartItem[]
+}
+
+model ItemInfo {
+  id          Int    @id @default(autoincrement())
+  itemId      Int
+  title       String
+  description String
+  Item        Item   @relation(fields: [itemId], references: [id])
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  Item Item[]
+}
+
+model Brand {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  Item Item[]
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSED
+  CANCELLED
+}
+
+enum Role {
+  USER
+  ADMIN
+}
