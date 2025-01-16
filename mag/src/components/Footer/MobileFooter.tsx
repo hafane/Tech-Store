@@ -10,11 +10,15 @@ import {
 import { Link } from "react-router-dom"
 import { NavbarLinks } from "../../utils/constants/NavbarConsts"
 import AccordionUI from "../ui/AccordionUI"
+import ScrollTopButton from "../ui/ScrolltopButton"
 
 const MobileFooter = () => {
 	return (
 		<footer className="overflow-hidden relative bg-blue-950  before:bg-blue-700 mt-10 before:h-full before:opacity-50 before:w-[calc(100%/2)] before:absolute before:mx-auto before:top-[calc(80%-1rem)] before:left-0 before:right-0 before:rounded-t-full before:blur-3xl">
-			<div className="container mx-auto py-10 px-6">
+			<div className="container mx-auto py-6 px-6">
+				<div className="flex justify-end">
+					<ScrollTopButton />
+				</div>
 				<div className="flex flex-col gap-4">
 					<span className="text-white font-medium text-md">
 						Подпишитесь на новости и обновления

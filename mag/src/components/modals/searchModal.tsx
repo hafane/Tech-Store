@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDebounce } from "../../hooks/useDebounce"
 import { useNavigate } from "react-router-dom"
 import { observer } from "mobx-react-lite"

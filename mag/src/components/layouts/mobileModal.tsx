@@ -1,13 +1,18 @@
 import { useOutsideClick } from "../../hooks/useOutsideClick"
+import { twMerge } from "tailwind-merge"
+import { IconType } from "react-icons"
 import { HiXMark } from "react-icons/hi2"
 
 type props = {
-	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
 	handleCloseModal: (e: React.MouseEvent<HTMLButtonElement>) => void
+	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
 	children: React.ReactNode
+	Icon?: IconType
+	closeBtnClass?: string
 }
 
-const MobileModal = ({ handleCloseModal, setIsModal, children }: props) => {
+const MobileModal = ({ handleCloseModal, setIsModal, children, Icon, closeBtnClass }: props) => {
+
 	const ref = useOutsideClick(() => {
 		setIsModal(false)
 	})
@@ -19,10 +24,10 @@ const MobileModal = ({ handleCloseModal, setIsModal, children }: props) => {
 		>
 			{children}
 			<button
-				className="absolute top-4 right-4 hover:bg-red-500/20 transition-colors"
+				className={twMerge("absolute top-4 right-4 hover:bg-red-500/20 transition-colors", closeBtnClass)}
 				onClick={handleCloseModal}
 			>
-				<HiXMark size={20} />
+				{Icon ? <Icon size={20} /> : <HiXMark size={20} />}
 			</button>
 		</div>
 	)

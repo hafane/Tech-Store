@@ -15,7 +15,7 @@ const Home = () => {
 		<div>
 			<div className="grid grid-cols-2 mb-12">
 				<div className="h-full flex flex-col ml-6 md:ml-0 items-start justify-evenly">
-					<h1 className="text-2xl md:text-7xl font-bold">Tech Mag</h1>
+					<h2 className="text-2xl md:text-7xl font-bold">Tech Mag</h2>
 					<span className="text-xs md:text-2xl flex items-center gap-3 font-bold">
 						"Join the
 						<span className="text-orange-600">digital revolution"</span>

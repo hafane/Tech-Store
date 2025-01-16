@@ -40,6 +40,7 @@ const DesktopNavbar = ({ isAuth, setIsState }: props) => {
 				</ul>
 				<div className="flex items-center gap-5">
 					<button
+						type="button"
 						onClick={() => setIsState({ isSearchModal: true })}
 						className="text-neutral-700"
 					>
@@ -47,15 +48,16 @@ const DesktopNavbar = ({ isAuth, setIsState }: props) => {
 					</button>
 					{isAuth ? (
 						<>
-							<button onClick={() => setIsState({ isCartDrop: true })}>
+							<button type="button" onClick={() => setIsState({ isCartDrop: true })}>
 								<BsBasket size={22} />
 							</button>
-							<button onClick={() => setIsState({ isDropdown: true })}>
+							<button type="button" onClick={() => setIsState({ isDropdown: true })}>
 								<LuUser2 size={22} />
 							</button>
 						</>
 					) : (
 						<button
+							type="button"
 							onClick={() => setIsState({ isAuthModal: true })}
 							className="py-2 px-3 bg-blue-500 text-white rounded-lg font-light text-sm"
 						>

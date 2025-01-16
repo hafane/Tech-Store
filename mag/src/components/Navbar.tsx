@@ -9,6 +9,7 @@ import UserDropdown from "./dropdowns/userDropdown"
 import SearchModal from "./modals/searchModal"
 import CartDropdown from "./dropdowns/cartDropdown"
 import MobileSidebar from "./mobile/sidebar/mobileSidebar"
+import AuthModal from "./modals/Mobile/AuthModal"
 
 export interface IStore {
 	isAuthModal?: boolean
@@ -39,7 +40,7 @@ const Navbar = observer(() => {
 				<DesktopNavbar isAuth={User.isAuth} setIsState={setIsState} />
 			)}
 			{isState.isAuthModal && (
-				<LoginModal setIsModal={() => setIsState({ isAuthModal: false })} />
+				isMobile ? <AuthModal setIsModal={() => setIsState({isAuthModal: false})} /> : <LoginModal setIsModal={() => setIsState({ isAuthModal: false })} />
 			)}
 			{isState.isDropdown && (
 				<UserDropdown setIsDropdown={() => setIsState({ isDropdown: false })} />

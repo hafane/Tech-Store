@@ -1,5 +1,5 @@
-import { FaCheck } from "react-icons/fa6"
 import { twMerge } from "tailwind-merge"
+import { FaCheck } from "react-icons/fa6"
 
 export interface CheckboxProps {
 	id: string

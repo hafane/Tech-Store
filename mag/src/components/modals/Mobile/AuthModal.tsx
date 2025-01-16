@@ -1,50 +1,52 @@
+import { Dispatch, SetStateAction, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useState } from "react"
-import { User } from "../../store/userStore"
-import { validateRules } from "../../utils/constants/validateConstants"
-import ModalLayout from "../layouts/modalLayout"
-import Tabs from "./loginComponents/Tabs"
-import InputTextUI from "../ui/InputTextUI"
-import ButtonUI from "../ui/ButtonUI"
-import { LuKeyRound } from "react-icons/lu"
+import { User } from "../../../store/userStore"
+import { validateRules } from "../../../utils/constants/validateConstants"
+import MobileModal from "../../layouts/mobileModal"
+import Tabs from "../loginComponents/Tabs"
+import InputTextUI from "../../ui/InputTextUI"
+import ButtonUI from "../../ui/ButtonUI"
 import { MdOutlineMailOutline } from "react-icons/md"
+import { LuKeyRound } from "react-icons/lu"
 import { FiUser } from "react-icons/fi"
+import { IoArrowBackOutline } from "react-icons/io5"
 
 type props = {
-	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
+	setIsModal: Dispatch<SetStateAction<boolean>>
 }
 
-type TUseForm = {
+type TForm = {
 	username: string
 	password: string
 	email: string
 }
 
-const LoginModal = ({ setIsModal }: props) => {
-	const [isPage, setIsPage] = useState<"login" | "registration">("login")
+const AuthModal = ({ setIsModal }: props) => {
+	const [isPage, setIsPage] = useState<string>("login")
 	const {
+		register,
 		formState: { errors },
 		handleSubmit,
-		reset,
-		register,
-	} = useForm<TUseForm>()
+	} = useForm<TForm>()
 
-	const handleCloseModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const handleModal = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 		setIsModal(false)
 	}
 
-	const OnSubmit = async (data: TUseForm) => {
+	const OnSubmit = async (data: TForm) => {
 		const user =
 			isPage === "registration"
 				? await User.registerUser(data.username, data.email, data.password)
 				: await User.fetchUser(data.username, data.password)
 		if (user) setIsModal(false)
-		reset()
 	}
 
 	return (
-		<ModalLayout handleCloseModal={handleCloseModal} setIsModal={setIsModal}>
+		<MobileModal handleCloseModal={handleModal} setIsModal={setIsModal} Icon={IoArrowBackOutline} closeBtnClass="left-4">
+			<div className="text-center mt-12 text-blue-500 text-2xl">
+				<span>Tech</span>
+			</div>
 			<Tabs isPage={isPage} setIsPage={setIsPage} />
 			<div className="text-2xl font-bold mt-10 mb-6 text-center">
 				<span>
@@ -98,8 +100,8 @@ const LoginModal = ({ setIsModal }: props) => {
 				form="authForm"
 				type="submit"
 			/>
-		</ModalLayout>
+		</MobileModal>
 	)
 }
 
-export default LoginModal
+export default AuthModal
