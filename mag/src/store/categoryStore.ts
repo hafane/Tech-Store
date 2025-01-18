@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { AxiosError } from "axios"
 import { FetchCategoryApi, changeCategory, createCategory, deleteCategory, TCategory } from "../services"
 import toast from "react-hot-toast"
 
@@ -17,8 +18,12 @@ class CategoryStore {
         try {
            const _list = await FetchCategoryApi()
            this.setList(_list.data)
-        } catch (error: Error | any) {
-           return console.log(error.response.data.message)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка во время получения категорий.")
+			}
         }
     }
 
@@ -27,9 +32,12 @@ class CategoryStore {
             const cat = await createCategory(name)
             toast.success(cat.data.message)
             return this.fetchList()
-        } catch (error: Error | any) {
-            toast.error("Произошла ошибка при создании категории")
-            return console.log(error.response.data.message)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка во время создания категории.")
+			}
         }
     }
 
@@ -38,9 +46,12 @@ class CategoryStore {
             const cat = await changeCategory(id, name)
             toast.success(cat.data.message)
             return this.fetchList()
-        } catch (error: Error | any) {
-            toast.error("Произошла ошибка при изменении категории")
-            return console.log(error.response.data.message)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка во время изменения категории.")
+			}
         }
     }
 
@@ -49,9 +60,12 @@ class CategoryStore {
             const deleted = await deleteCategory(id)
             toast.success(deleted.data.message)
             return this.fetchList()
-        } catch (error: Error | any) {
-            toast.error("Произошла ошибка при удалении категории")
-            return console.log(error.response.data.message)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка во время удаления категории.")
+			}
         }
     }
     

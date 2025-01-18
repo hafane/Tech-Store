@@ -1,6 +1,13 @@
 import { makeAutoObservable } from "mobx"
 import { jwtDecode } from "jwt-decode"
-import { LoginApi, RegistrationApi, LogoutApi, RefreshApi, ChangePersonal } from "../services"
+import { AxiosError } from "axios"
+import {
+	LoginApi,
+	RegistrationApi,
+	LogoutApi,
+	RefreshApi,
+	ChangePersonal,
+} from "../services"
 import toast from "react-hot-toast"
 
 type UserData = {
@@ -44,8 +51,12 @@ class UserStore {
 			this.setIsAdmin(this.decodeAccessToken(token) === "ADMIN")
 			toast.success("Вы успешно авторизовались.")
 			return true
-		} catch (error: Error | any) {
-			toast.error(error.response.data.message)
+		} catch (error) {
+			if (error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка во время аутентификации.")
+			}
 			return false
 		}
 	}
@@ -57,8 +68,12 @@ class UserStore {
 			this.setIsAuth(true)
 			toast.success("Вы успешно зарегистрировались.")
 			return true
-		} catch (error: Error | any) {
-			toast.error(error.response.data.message)
+		} catch (error) {
+			if (error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка во время регистрации.")
+			}
 			return false
 		}
 	}
@@ -71,8 +86,12 @@ class UserStore {
 			this.setIsAdmin(false)
 			toast.success(logout.data.message)
 			return
-		} catch (error: Error | any) {
-			toast.error(error.response.data.message)
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка во время логаута.")
+			}
 			return
 		}
 	}
@@ -85,21 +104,38 @@ class UserStore {
 			const token = refresh.data.accessToken
 			this.setIsAdmin(this.decodeAccessToken(token) === "ADMIN")
 			return
-		} catch (error: Error | any) {
-			return console.log(error.response.data.message)
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка во время обновления.")
+			}
 		}
 	}
 
-	changePersonalData = async (oldPassword: string, username?: string, email?: string, password?: string) => {
+	changePersonalData = async (
+		oldPassword: string,
+		username?: string,
+		email?: string,
+		password?: string
+	) => {
 		try {
-			const change = await ChangePersonal(oldPassword, email || undefined, username || undefined, password || undefined)
+			const change = await ChangePersonal(
+				oldPassword,
+				email || undefined,
+				username || undefined,
+				password || undefined
+			)
 			this.setUser(change.data.user)
 			this.setIsAuth(true)
 			return toast.success("Данные успешно изменены.")
-		} catch (error: Error | any) {
-			toast.error("Произошла ошибка при изменении данных.")
-			return console.log(error.response.data.message) 
-		}	
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при изменении данных.")
+			}
+		}
 	}
 }
 

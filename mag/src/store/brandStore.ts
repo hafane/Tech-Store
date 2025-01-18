@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { AxiosError } from "axios"
 import { AllBrandsApi, changeBrand, createBrand, deleteBrand } from "../services"
 import toast from "react-hot-toast"
 
@@ -23,8 +24,12 @@ class BrandStore {
 			const list = await AllBrandsApi()
 			this.setBrandList(list.data)
 			return
-		} catch (error: Error | any) {
-			return console.log(error.response.data.message)
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка во время получения всех брендов.")
+			}
 		}
 	}
 
@@ -34,7 +39,11 @@ class BrandStore {
 			toast.success(newBrand.data.message)
 			return this.fetchAllBrands()
 		} catch (error) {
-			return console.log(error)
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при изменении информации о бренде.")
+			}
 		}
 	}
 
@@ -44,7 +53,11 @@ class BrandStore {
 			toast.success(newBrand.data.message)
 			return this.fetchAllBrands()
 		} catch (error) {
-			return console.log(error)
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при добавлении нового бренда.")
+			}
 		}
 	}
 
@@ -53,9 +66,12 @@ class BrandStore {
 			const deleted = await deleteBrand(id)
 			toast.success(deleted.data.message)
 			return this.fetchAllBrands()
-		} catch (error: Error | any) {
-			toast.error(error.response.data.message)
-			return console.log(error)
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при удалении бренда.")
+			}
 		}
 	}
 }

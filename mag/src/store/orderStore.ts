@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { AxiosError } from "axios"
 import { getAllOrders, getUserOrders, IOrder } from "../services"
 import { TCreateOrder } from "../services/types/OrderTypes"
 import { createOrder } from "../services/orderServices"
@@ -25,8 +26,12 @@ class OrderStore {
         try {
             const data = await getUserOrders(status)
             this.setOrdersHistory(data.data)
-        } catch (error: Error | any) {
-            return console.log(error)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка во получения всех заказов пользователя.")
+			}
         }
     }
 
@@ -34,8 +39,12 @@ class OrderStore {
         try {
             const data = await getAllOrders(take)
             this.setAllOrders(data.data)
-        } catch (error: Error | any) {
-            return console.log(error)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка во получения всех заказов.")
+			}
         }
     }
 
@@ -46,8 +55,11 @@ class OrderStore {
             toast.success("Заказ успешно создан. Перенаправление...")
             window.location.href = d.data.url as string 
         } catch (error) {
-            toast.error("Произошла ошибка при создании заказа.")
-            return console.log(error)
+            if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при создании заказа.")
+			}
         } finally {
             this.isLoading = false
         }

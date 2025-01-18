@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { AxiosError } from "axios"
 import { FetchItemApi, ISearchItem, SearchItemsApi, getOneItem, IGetAllItems, TFetchedOneItem } from "../services"
 
 class ItemStore {
@@ -33,8 +34,12 @@ class ItemStore {
             this.setItems(items.data.items)
             items.data.items.length >= 14 && this.setCount(items.data.items.length)
             return true
-        } catch (error: Error | any) {
-            return console.log(error.response.data.message)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка при получении каталога товаров.")
+			}
         }
     }
 
@@ -43,8 +48,12 @@ class ItemStore {
             const items = await SearchItemsApi(word)
             this.setSearchedItems(items.data)
             return 
-        } catch (error: Error | any) {
-            return console.log(error)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка во время поиска товаров.")
+			}
         }
     }
 
@@ -53,8 +62,12 @@ class ItemStore {
             const item = await getOneItem(Number(id))
             this.setItem(item.data)
             return true
-        } catch (error: Error | any) {
-            return console.log(error.response.data.message)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка при получении данных о товаре.")
+			}
         }
     }
 }

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { AxiosError } from "axios"
 import { addItemToCart, deleteCartItem, getCart, updateQuantity, TCartType } from "../services"
 import toast from "react-hot-toast"
 
@@ -24,8 +25,12 @@ class CartStore {
             this.setCart(items.data)
             this.setCartLength(items.data.CartItem.length)
             return true
-        } catch (error: Error | any) {
-            console.log(error.response.data.message)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				console.log(error.response?.data.message)
+			} else {
+				console.log("Произошла ошибка во время получения корзины пользователя.")
+			}
             return null
         }
     }
@@ -37,8 +42,11 @@ class CartStore {
             this.setCartLength(item.data.cart.CartItem.length)
             return toast.success("Товар успешно добавлен в корзину.")
         } catch (error) {
-            console.log(error)
-            return toast.error("Произошла ошибка при добавлении товара в корзину.")
+            if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при добавлении товара в корзину.")
+			}
         }
     }
 
@@ -48,8 +56,12 @@ class CartStore {
             this.setCart(updatedCart.data.cart)
             this.setCartLength(updatedCart.data.cart.CartItem.length)
             return
-        } catch (error: Error | any) {
-            return console.log(error)
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при изменении количества товара в корзине.")
+			}
         }
     }
 
@@ -59,9 +71,12 @@ class CartStore {
             this.setCart(updatedCart.data.cart)
             this.setCartLength(updatedCart.data.cart.CartItem.length)
             return toast.success("Товар успешно удален из корзины.")
-        } catch (error: Error | any) {
-            console.log(error)
-            return toast.error("Произошла ошибка при удалении товара из корзины.")
+        } catch (error) {
+            if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при удалении товара из корзины.")
+			}
         }
     }
 }
