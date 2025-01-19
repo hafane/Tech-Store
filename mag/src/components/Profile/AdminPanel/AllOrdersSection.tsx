@@ -37,7 +37,7 @@ const AllOrdersSection = observer(() => {
 									</div>
 									<div className="font-semibold">
 										Дата заказа
-										<span className="font-light">{time.toLocaleDateString()}-{time.toLocaleTimeString()}</span>
+										<time className="font-light">{time.toLocaleDateString()}-{time.toLocaleTimeString()}</time>
 									</div>
 									<div className="font-semibold w-80">
 										Получатель

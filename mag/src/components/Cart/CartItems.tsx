@@ -28,7 +28,7 @@ const CartItems = observer(() => {
 	}
 
 	return (
-		<div className="col-span-8 space-y-10">
+		<div className="col-span-1 md:col-span-8 space-y-10">
 			<div>
 				<span className="text-2xl font-bold">1. Корзина</span>
 				<div className="overflow-y-scroll mt-3 max-h-[620px]">

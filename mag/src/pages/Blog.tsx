@@ -18,7 +18,7 @@ const Blog = () => {
 							<div className="flex justify-between [&>span]:text-sm [&>span]:text-zinc-500">
 								<span className="flex gap-2 items-center">
                                     <CgCalendar size={18}/>
-                                    {blog.date}
+                                    <time>{blog.date}</time>
                                 </span>
 								<span className="flex gap-2 items-center">
                                     <LuTimer size={18}/>

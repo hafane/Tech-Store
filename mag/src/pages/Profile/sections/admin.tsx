@@ -17,7 +17,7 @@ const Admin = () => {
 			<h1 className="mb-4">Админ панель</h1>
 			<div className="flex flex-col gap-8">
 				<div className="border-b">
-					<div className="w-1/2 flex justify-between">
+					<div className="w-full md:w-1/2 flex justify-between">
 						<span
 							data-current-section={adminSection === "Товар"}
 							className={baseClass}

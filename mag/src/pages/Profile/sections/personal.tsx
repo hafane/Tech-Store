@@ -25,7 +25,7 @@ const Personal = () => {
 		<>
 			<h1 className="mb-4">Личные данные</h1>
 			<div>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-1/2 flex flex-col gap-4" id="personal">
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-1/2 flex flex-col gap-4" id="personal">
 					<span className="flex gap-4">
 						<label className="w-full">
 							<span className="ml-3 text-sm font-light text-zinc-500">Имя</span>

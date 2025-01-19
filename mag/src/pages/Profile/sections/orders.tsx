@@ -4,27 +4,29 @@ import { CanceledSection, PendingSection, SuccessSection } from "../../../compon
 const Orders = () => {
 	const [section, setSection] = useState<string>("")
 
+	const baseClass = "data-[current-section=true]:text-blue-600 data-[current-section=true]:border-b-2 data-[current-section=true]:border-blue-600 text-zinc-500 cursor-pointer"
+
 	return (
 		<>
 			<h1 className="mb-4">История заказов</h1>
 			<div className="flex flex-col gap-8">
 				<div className="border-b">
-					<div className="w-1/2 flex justify-between">
+					<div className="w-full md:w-1/2 flex justify-between">
 						<span
 							data-current-section={section === "Pending"}
-							className="data-[current-section=true]:text-blue-600 data-[current-section=true]:border-b-2 data-[current-section=true]:border-blue-600 text-zinc-500 cursor-pointer"
+							className={baseClass}
 						>
 							<button onClick={() => setSection("Pending")}>Pending</button>
 						</span>
 						<span
 							data-current-section={section === "Success"}
-							className="data-[current-section=true]:text-blue-600 data-[current-section=true]:border-b-2 data-[current-section=true]:border-blue-600 text-zinc-500 cursor-pointer"
+							className={baseClass}
 						>
 							<button onClick={() => setSection("Success")}>Success</button>
 						</span>
 						<span
 							data-current-section={section === "Canceled"}
-							className="data-[current-section=true]:text-blue-600 data-[current-section=true]:border-b-2 data-[current-section=true]:border-blue-600 text-zinc-500 cursor-pointer"
+							className={baseClass}
 						>
 							<button onClick={() => setSection("Canceled")}>Canceled</button>
 						</span>

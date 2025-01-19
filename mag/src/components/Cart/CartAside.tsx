@@ -6,7 +6,7 @@ import ButtonUI from "../ui/ButtonUI"
 const CartAside = observer(() => {
     
 	return (
-		<div className="col-span-4 flex flex-col bg-white rounded-md shadow-lg p-5 sticky top-4">
+		<div className="col-span-1 md:col-span-4 flex flex-col bg-white rounded-md shadow-lg p-5 sticky top-4">
 			<span className="text-2xl font-bold">Детали оплаты</span>
 			<div className="text-zinc-400 text-sm p-2 [&>p]:flex [&>p]:justify-between [&>p]:mb-2">
 				<p>

@@ -13,7 +13,7 @@ const Cart = observer(() => {
 					<span className="text-sm font-light mt-2">Корзина</span>
 				</div>
 			</div>
-			<div className="grid grid-cols-12 gap-12 items-start">
+			<div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
 				<CartItems />
 				<CartAside/>
 			</div>

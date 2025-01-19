@@ -29,9 +29,9 @@ const OrderItem = ({
 				</div>
 				<div className="font-semibold">
 					Дата заказа
-					<span className="font-light">
+					<time className="font-light">
 						{conv.toLocaleDateString()}-{conv.toLocaleTimeString()}
-					</span>
+					</time>
 				</div>
 				<div className="font-semibold">
 					Получатель
