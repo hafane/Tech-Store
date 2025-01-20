@@ -1,5 +1,5 @@
-import { twMerge } from "tailwind-merge"
 import { useOutsideClick } from "../../hooks/useOutsideClick"
+import { twMerge } from "tailwind-merge"
 
 type Props = {
     setIsDropdown: React.Dispatch<React.SetStateAction<boolean>>

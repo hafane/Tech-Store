@@ -1,7 +1,7 @@
 import { NavbarLinks } from "../../utils/constants/NavbarConsts"
 import { Link } from "react-router-dom"
 import InputTextUI from "../ui/InputTextUI"
-import ScrollTopButton from "../ui/ScrolltopButton"
+import ScrollTopButton from "../ui/ScrollTopButton"
 import { CgMail } from "react-icons/cg"
 import { BiMapPin, BiPhone, BiMailSend } from "react-icons/bi"
 import {

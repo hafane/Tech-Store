@@ -3,7 +3,7 @@ type props = {
 	totalAmount: number
 	orderPlaces: number
 	orderClaimer: string
-	orderItems: string
+	orderItems?: string
 }
 
 const OrderItem = ({
@@ -11,9 +11,8 @@ const OrderItem = ({
 	orderId,
 	orderPlaces,
 	totalAmount,
-	orderItems,
 }: props) => {
-	const items = JSON.parse(orderItems)
+	// const items = JSON.parse(orderItems)
 	const conv = new Date(orderPlaces)
 
 	return (

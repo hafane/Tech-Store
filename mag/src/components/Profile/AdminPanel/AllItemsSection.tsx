@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Item } from "../../../store/itemStore"
+import ListItem from "./Item/ListItem"
 import ItemAddModal from "../../modals/itemAddModal"
 import { BiPlus } from "react-icons/bi"
-import ListItem from "./Item/ListItem"
 
 const AllItemsSection = observer(() => {
 	const [isModal, setIsModal] = useState<boolean>(false)
 
 	useEffect(() => {
-		Item.fetchItems("1")
+		Item.fetchItems(1)
 	}, [])
 
 	return (

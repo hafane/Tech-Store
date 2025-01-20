@@ -2,7 +2,6 @@ import { twMerge } from "tailwind-merge"
 import { FaCheck } from "react-icons/fa6"
 
 export interface CheckboxProps {
-	id: string
 	label: string
 	value?: string | number
 	checked?: boolean | string
@@ -11,7 +10,7 @@ export interface CheckboxProps {
 	boxClass?: string
 }
 
-const CheckboxUI = ({ label, id, checked, onChange, labelClass, boxClass, value }: CheckboxProps) => {
+const CheckboxUI = ({ label, checked, onChange, labelClass, boxClass, value }: CheckboxProps) => {
 	return (
 		<div className={twMerge(`flex items-center`, boxClass)}>
 			<button

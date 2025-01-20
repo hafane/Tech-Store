@@ -16,7 +16,6 @@ const CheckboxGroup = ({ items, selected, selectedChange }: props) => {
 		<div className="flex flex-col gap-2 mb-2">
 			{items.map(item => (
 				<CheckboxUI
-					id={item.name}
 					key={item.id}
                     labelClass="text-sm font-light"
 					label={item.name}

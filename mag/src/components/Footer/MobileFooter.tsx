@@ -1,16 +1,16 @@
+import { Link } from "react-router-dom"
+import { NavbarLinks } from "../../utils/constants/NavbarConsts"
 import InputTextUI from "../ui/InputTextUI"
-import { BiMapPin, BiPhone, BiMailSend } from "react-icons/bi"
+import ScrollTopButton from "../ui/ScrollTopButton"
+import AccordionUI from "../ui/AccordionUI"
 import { CgMail } from "react-icons/cg"
+import { BiMapPin, BiPhone, BiMailSend } from "react-icons/bi"
 import {
 	RiFacebookCircleLine,
 	RiTwitterXFill,
 	RiInstagramLine,
 	RiYoutubeLine,
 } from "react-icons/ri"
-import { Link } from "react-router-dom"
-import { NavbarLinks } from "../../utils/constants/NavbarConsts"
-import AccordionUI from "../ui/AccordionUI"
-import ScrollTopButton from "../ui/ScrolltopButton"
 
 const MobileFooter = () => {
 	return (

@@ -2,27 +2,6 @@ import { useState } from "react"
 import CommentsSection from "./Sections/CommentsSection"
 import InfoSection from "./Sections/InfoSection"
 
-type Props = {
-	ItemInfo: {
-		id: number
-		itemId: number
-		title: string
-		description: string
-	}[]
-
-	Comments: {
-		id: number
-		itemId: number
-		title: string
-		userId: number
-		content: string
-		User: {
-			id: number
-			username: string
-		}
-	}[]
-}
-
 const BottomInfo = () => {
 	const [selectedSection, setSelectedSection] = useState("characteristics")
 

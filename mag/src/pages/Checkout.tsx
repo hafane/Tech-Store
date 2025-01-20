@@ -1,24 +1,24 @@
-import { useEffect } from "react"
-import { useLoaderData } from "react-router-dom"
-import { PaymentData } from "../services/types/paymentTypes"
+// import { useEffect } from "react"
+// import { useLoaderData } from "react-router-dom"
+// import { PaymentData } from "../services/types/paymentTypes"
 
 const Checkout = () => {
-    const loaderData = useLoaderData() 
+    // const loaderData = useLoaderData() 
 
-    useEffect(() => {
-       loaderData && console.log(loaderData)
-    }, [])
+    // useEffect(() => {
+    //    loaderData && console.log(loaderData)
+    // }, [])
 
     return (
         <div>
             success 
-            <ul>
+            {/* <ul>
                 {loaderData && loaderData.data.map((item: PaymentData) => (
                     <li key={item.orderId}>
                         {item.status}
                     </li>
                 ))}
-            </ul>
+            </ul> */}
         </div>
     );
 }
