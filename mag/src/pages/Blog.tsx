@@ -9,7 +9,9 @@ const Blog = () => {
 				{Blogs.map(blog => (
 					<article className="bg-white rounded-b-md shadow-md" key={blog.id}>
 						<img
-							className="w-full max-h-[306px] rounded-t-md"
+							className="max-h-80 rounded-t-md"
+							width="588"
+							height="320"
 							src={blog.image}
 							alt={blog.title}
 							loading="lazy"

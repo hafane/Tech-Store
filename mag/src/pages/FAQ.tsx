@@ -5,7 +5,7 @@ const FAQ = () => {
 	return (
 		<div className="container max-w-[1016px] mx-auto">
 			<div className="flex px-4 sm:px-0 mb-4">
-				<img src={frame} alt="Frequently Asked Questions" loading="lazy" />
+				<img width="1016" height="426" src={frame} alt="Frequently Asked Questions" loading="lazy" />
 			</div>
 			<div className="block sm:grid sm:grid-cols-4">
 				<aside className="col-span-1 p-4">

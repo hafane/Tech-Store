@@ -29,7 +29,8 @@ const ItemCard = ({
 			<Link className="flex justify-center" to={itemPageLink}>
 				<img
 					loading="lazy"
-					className="w-[200px] h-[200px] object-contain"
+					width="200"
+					height="200"
 					src={import.meta.env.VITE_IMAGE_URL + image[0]}
 					alt={name}
 				/>

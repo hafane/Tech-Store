@@ -23,7 +23,9 @@ const Card = ({itemId, image, name, brand, price, quantity}: Props) => {
 	return (
 		<div className="w-full flex gap-5 h-52 md:h-44 py-1 px-2 shadow-md rounded-md mb-3">
 			<img
-				className="max-w-44 w-44 max-h-36 h-36 self-center"
+				className="self-center"
+				width="144"
+				height="144"
 				src={import.meta.env.VITE_IMAGE_URL + image[0]}
 				alt=""
 			/>

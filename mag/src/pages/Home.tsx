@@ -30,7 +30,8 @@ const Home = () => {
 				<div className="flex justify-center">
 					<img
 						loading="lazy"
-						className="w-full md:w-2/3"
+						width="512"
+						height="404"
 						src={mainImage}
 						alt="MainImage"
 					/>
@@ -47,9 +48,11 @@ const Home = () => {
 							<Link className="flex flex-col justify-center items-center" to={`${NavbarLinks.Catalog}${item.link}`}>
 								<img
 									loading="lazy"
-									className="w-16 h-16 md:w-44 md:h-44"
+									className="md:w-44 md:h-44"
 									src={item.image}
-									alt=""
+									width="176"
+									height="176"
+									alt={item.title}
 								/>
 								{item.title}
 							</Link>
