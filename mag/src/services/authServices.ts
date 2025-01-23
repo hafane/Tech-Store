@@ -1,17 +1,7 @@
 import { AxiosResponse } from "axios"
 import { $authHost, $host } from "../api/instance"
 import { AuthURL } from "./enums/URLEnum"
-
-
-export interface LoginResponse {
-    accessToken: string,
-    user: {
-        id: number,
-        username: string,
-        email: string,
-        activation: boolean,
-    }
-}
+import { LoginResponse, LogoutResponse } from "./types/AuthTypes"
 
 
 export const LoginApi = async (username: string, password: string): Promise<AxiosResponse<LoginResponse>> => {
@@ -26,8 +16,8 @@ export const RegistrationApi = async (username: string, email: string, password:
     return data
 }
 
-export const LogoutApi = async () => {
-    const data = await $host.post(AuthURL.LOGOUT)
+export const LogoutApi = async (): Promise<AxiosResponse<LogoutResponse>> => {
+    const data = await $host.post<LogoutResponse>(AuthURL.LOGOUT)
     localStorage.removeItem("token")
     return data
 }

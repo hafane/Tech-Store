@@ -31,9 +31,10 @@ export {
 } from "./cartServices"
 export { addComment, deleteComment } from "./commentsServices"
 export { getAllOrders, getUserOrders } from "./orderServices"
-export { ChangePersonal } from "./userServices"
+export { ChangePersonal, CreateActivateLink } from "./userServices"
 export type { ISearchItem } from "./itemServices"
 export type { IFetchedItem,IGetAllItems, TFetchedOneItem, IFetchedItemBrand } from "./types/ItemTypes"
 export type {TCategory} from './categoryServices'
 export type {IOrder} from './types/OrderTypes'
 export type {TCartType} from './types/CartTypes'
+export type {LoginResponse, LogoutResponse} from './types/AuthTypes'

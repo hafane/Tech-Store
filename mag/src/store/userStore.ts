@@ -7,6 +7,7 @@ import {
 	LogoutApi,
 	RefreshApi,
 	ChangePersonal,
+	CreateActivateLink,
 } from "../services"
 import toast from "react-hot-toast"
 
@@ -134,6 +135,19 @@ class UserStore {
 				toast.error(error.response?.data.message)
 			} else {
 				toast.error("Произошла ошибка при изменении данных.")
+			}
+		}
+	}
+
+	sendActivation = async () => {
+		try {
+			const res = await CreateActivateLink()
+			return toast.success(res.data.message)
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при отправке ссылки активации.")
 			}
 		}
 	}

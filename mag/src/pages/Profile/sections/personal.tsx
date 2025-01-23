@@ -1,10 +1,11 @@
+import { useForm } from "react-hook-form"
+import { observer } from "mobx-react-lite"
+import { User } from "../../../store/userStore"
 import ButtonUI from "../../../components/ui/ButtonUI"
 import InputTextUI from "../../../components/ui/InputTextUI"
 import { BiKey } from "react-icons/bi"
-import { FaUser } from "react-icons/fa6"
 import { MdEmail } from "react-icons/md"
-import { User } from "../../../store/userStore"
-import { useForm } from "react-hook-form"
+import { FaUser } from "react-icons/fa6"
 
 type TForm = {
 	newPassword?: string
@@ -13,20 +14,27 @@ type TForm = {
 	newEmail?: string
 }
 
-const Personal = () => {
-	const {formState: {errors}, handleSubmit, register, reset} = useForm<TForm>()
+const Personal = observer(() => {
+	const {formState: {errors}, handleSubmit, register, reset, setError} = useForm<TForm>()
+
+	const userData = User.user
+
+	const handleCreateActivate = async () => {
+		await User.sendActivation()
+	}
 
 	const onSubmit = async (data: TForm) => {
+		if(!userData.activation) return setError("root", {message: "Вы не активировали свою почту."})
 		await User.changePersonalData(data.currentPassword, data.newUsername, data.newEmail, data.newPassword)
 		reset()
 	}
 
 	return (
 		<>
-			<h1 className="mb-4">Личные данные</h1>
+			<h3 className="mb-4">Личные данные</h3>
 			<div>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-1/2 flex flex-col gap-4" id="personal">
-					<span className="flex gap-4">
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-1/2 flex flex-col gap-4" id="personal" method="POST">
+					<div className="flex gap-4">
 						<label className="w-full">
 							<span className="ml-3 text-sm font-light text-zinc-500">Имя</span>
 							<InputTextUI
@@ -34,11 +42,11 @@ const Personal = () => {
 								register={register("newUsername", {maxLength: 18})}
 								iconClasses="size-5 top-5 text-zinc-400"
 								classNames="bg-zinc-300/20 py-5 border-none"
-								placeholder={User.user.username}
+								placeholder={userData.username}
 								type="text"
 							/>
 						</label>
-						<label className="w-full">
+						<label className="w-full relative">
 							<span className="ml-3 text-sm font-light text-zinc-500">
 								Почта
 							</span>
@@ -47,11 +55,12 @@ const Personal = () => {
 								register={register("newEmail", {pattern: /^[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}$/i})}
 								iconClasses="size-5 top-5 text-zinc-400"
 								classNames="bg-zinc-300/20 py-5 border-none"
-								placeholder={User.user.email}
+								placeholder={userData.email}
 								type="email"
 							/>
+							<button onClick={handleCreateActivate} disabled={userData.activation} type="button" className={`text-sm font-light absolute right-0 top-0 ${userData.activation ? "text-blue-500" : "text-red-500"}`}>{userData.activation ? "Подтверждено" : "Не подтверждено"}</button>
 						</label>
-					</span>
+					</div>
 					<InputTextUI
 						Icon={BiKey}
 						register={register("newPassword", {maxLength: 24, pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[%$#&*])/g,  minLength: 8})}
@@ -71,15 +80,18 @@ const Personal = () => {
 					{errors.currentPassword && <span className="text-red-500">Поле обязательно.</span>}
 					{errors.newEmail && <span className="text-red-500">Некорректная почта.</span>}
 					{errors.newUsername && <span className="text-red-500">Некорректное имя.</span>}
+					{errors.root && <span className="text-red-500">{errors.root.message}</span>}
 				</form>
 				<ButtonUI
+					disabled={!userData.activation}
 					className="w-1/2 p-2 mt-4"
 					form="personal"
+					type="submit"
 					innerText="Сохранить"
 				/>
 			</div>
 		</>
 	)
-}
+})
 
 export default Personal

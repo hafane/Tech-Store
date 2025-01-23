@@ -41,7 +41,8 @@ export enum OrderURL {
 }
 
 export enum UserURL {
-    CHANGE_PERSONAL = "user/change-personal"
+    CHANGE_PERSONAL = "user/change-personal",
+    CREATE_ACTIVATE = "user/activate/create",
 }
 
 export enum CommentURL {

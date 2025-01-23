@@ -53,12 +53,12 @@ class MailService {
 		await transporter.sendMail({
 			from: process.env.SMTP_USER,
 			to: to,
-			subject: "Подтверждение почты.",
+			subject: "Подтверждение почты на сайте Tech.",
 			text: "",
 			html: `
                 <div>
                     <h1>Здравствуйте ${to}</h1>
-                    <p>Перейдите по <a href='http://localhost:5000/activate/${link}'>ссылке</a> для подтверждения почты</p>
+                    <p>Перейдите по <a href='http://localhost:5000/api/user/activate/${link}'>ссылке</a> для подтверждения почты</p>
                 </div>
             `,
 		})

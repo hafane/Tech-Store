@@ -43,7 +43,7 @@ class AuthController {
 			const { refreshCookie } = req.cookies
 			const out = await AuthService.logout(refreshCookie)
 			res.clearCookie("refreshCookie", { path: "/" })
-			res.status(200).json({ ...out })
+			res.status(200).json(out)
 		} catch (e) {
 			next(e)
 		}

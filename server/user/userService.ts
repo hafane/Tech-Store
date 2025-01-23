@@ -60,11 +60,11 @@ class UserService {
         return {message: "Ссылка была создана и отправлена на вашу почту."}
     }
 
-    async activate(userId: number, link: string) {
+    async activate(link: string) {
         if(!link) {
             throw SetError.BadRequestException("Вы не ввели ссылку для активации.")
         }
-        const foundUser = await ActivationService.findLink(userId, link)
+        const foundUser = await ActivationService.findLink(link)
         if (!foundUser) {
             throw SetError.BadRequestException("Некорректная ссылка для активации.")
         }

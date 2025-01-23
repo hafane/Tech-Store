@@ -54,13 +54,14 @@ class UserController {
 	async activateMail(req: IActivate, res: Response, next: NextFunction) {
 		try {
 			const { link } = req.params
-			const { id } = req.user
-			const activation = await UserService.activate(id, link)
+			const activation = await UserService.activate(link)
 			res
 				.status(200)
 				.send(
-					`<h1>${activation.message}</h1>` +
-						`<button type="submit"><a href="http://localhost:3000/">Вернуться на главную</a></button>`
+					`<div style="width: 1024px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+						<h1>${activation.message}</h1>
+						<button style="margin-top: 20px; padding: 10px; border-radius: 5px; border: none; background-color: #4CAF50;" type="submit"><a style="text-decoration: none; color: white;" href="http://localhost:3000/">Вернуться на главную</a></button>
+					</div>`
 				)
 		} catch (e) {
 			next(e)

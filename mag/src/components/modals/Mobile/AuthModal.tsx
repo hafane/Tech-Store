@@ -22,7 +22,7 @@ type TForm = {
 }
 
 const AuthModal = ({ setIsModal }: props) => {
-	const [isPage, setIsPage] = useState<string>("login")
+	const [isPage, setIsPage] = useState<"login" | "registration">("login")
 	const {
 		register,
 		formState: { errors },

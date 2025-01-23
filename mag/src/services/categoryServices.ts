@@ -18,12 +18,12 @@ export const createCategory = async (name: string): Promise<AxiosResponse<Catego
     return data
 }
 
-export const changeCategory = async (categoryId: number,  name: string) => {
+export const changeCategory = async (categoryId: number,  name: string): Promise<AxiosResponse<CategoryMessage>> => {
     const data = await $authHost.patch<CategoryMessage>(CategoryURL.CHANGE + categoryId, { name })
     return data
 }
 
-export const deleteCategory = async (categoryId: number) => {
+export const deleteCategory = async (categoryId: number): Promise<AxiosResponse<CategoryMessage>> => {
     const data = await $authHost.delete<CategoryMessage>(CategoryURL.DELETE + categoryId)
     return data
 }

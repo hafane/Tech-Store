@@ -14,23 +14,22 @@ class ActivationService {
                 User: true
             }
         })
-        return {...create}
+        return create
     }
 
-    async findLink(userId: number, link: string) {
+    async findLink(link: string) {
         if(!link) {
             throw SetError.BadRequestException("Вы не ввели ссылку для активации.")
         }
         const foundLink = await prisma.activation.findFirst({
             where: {
-                userId: userId,
                 link: link
             }
         })
         if(!foundLink) {
             throw SetError.NotFoundException("Ссылка не найдена.")
         }
-        return {...foundLink}
+        return foundLink
     }
 
     async deleteLinkFromBase(id: number) {

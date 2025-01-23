@@ -14,7 +14,7 @@ const Admin = () => {
 
 	return (
 		<>
-			<h1 className="mb-4">Админ панель</h1>
+			<h3 className="mb-4">Админ панель</h3>
 			<div className="flex flex-col gap-8">
 				<div className="border-b">
 					<div className="w-full md:w-1/2 flex justify-between">

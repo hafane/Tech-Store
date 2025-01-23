@@ -1,9 +1,11 @@
+import { Dispatch } from "react"
+
 const Tabs = ({
 	isPage,
 	setIsPage,
 }: {
 	isPage: string
-	setIsPage: Function
+	setIsPage: Dispatch<React.SetStateAction<"login" | "registration">>
 }) => {
 	return (
 		<div className="flex [&>span]:w-[calc(100%/2)] [&>span]:border-b-2 [&>span]:cursor-pointer">
