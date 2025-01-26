@@ -19,7 +19,7 @@ const Item = observer(() => {
 			</div>
 			<aside className="h-full flex flex-col justify-between min-w-[312px] max-h-[418px] bg-white rounded-md shadow-lg p-5">
 				<span className="text-xl">{ItemStore.oneItem.price} &#8381;</span>
-				<ButtonUI disabled={ItemStore.oneItem.available === 0 || User.isAuth === false} onClick={() => handleAddToCart(ItemStore.oneItem.id)} className="mt-5 p-4 disabled:opacity-50 disabled:cursor-not-allowed" innerText="Добавить в корзину." />
+				<ButtonUI disabled={ItemStore.oneItem.available === 0 || User.isAuth === false} onClick={() => handleAddToCart(ItemStore.oneItem.id)} className="mt-5 p-4 disabled:opacity-50 disabled:cursor-not-allowed" children="Добавить в корзину." />
 			</aside>
 		</div>
 	)

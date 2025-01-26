@@ -22,7 +22,7 @@ const Home = () => {
 					</span>
 					<ButtonUI
 						onClick={handleNavigate}
-						innerText="Explore more"
+						children="Explore more"
 						type="button"
 						className="bg-orange-600 py-2 text-xs md:px-5 md:py-2 text-white w-1/2 md:w-2/5"
 					/>

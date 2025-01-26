@@ -47,7 +47,7 @@ const Profile = () => {
 	)
 	return (
 		<div className="block md:flex gap-12">
-			<aside className="max-w-96 w-96 bg-zinc-300/20 rounded-md">
+			<aside className="max-w-96 w-96 bg-zinc-300/20 rounded-md self-start">
 				<span className="flex items-center gap-3 text-xl p-2 font-semibold">
 					<BiUserCircle size={64} color="lightgray" />
 					{User.user.username}

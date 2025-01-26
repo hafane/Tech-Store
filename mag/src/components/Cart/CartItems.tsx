@@ -4,7 +4,7 @@ import { Cart } from "../../store/cartStore"
 import { Order } from "../../store/orderStore"
 import Card from "../CartDropdown/Card"
 import InputTextUI from "../ui/InputTextUI"
-import { validateOrderRules } from "../../utils/constants/validateConstants"
+import { validateOrderRules } from "../../utils/constants/FormInputConstants"
 
 type TForm = {
 	name: string

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { useForm } from "react-hook-form"
 import { User } from "../../../store/userStore"
-import { validateRules } from "../../../utils/constants/validateConstants"
+import { validateRules } from "../../../utils/constants/FormInputConstants"
 import MobileModal from "../../layouts/mobileModal"
 import Tabs from "../loginComponents/Tabs"
 import InputTextUI from "../../ui/InputTextUI"
@@ -96,7 +96,7 @@ const AuthModal = ({ setIsModal }: props) => {
 			</form>
 			<ButtonUI
 				className="px-5 py-2 w-full"
-				innerText={isPage === "registration" ? "Регистрация" : "Войти"}
+				children={isPage === "registration" ? "Регистрация" : "Войти"}
 				form="authForm"
 				type="submit"
 			/>

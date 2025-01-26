@@ -20,7 +20,7 @@ const Filter = observer(() => {
 				<p className="font-bold">Фильтры</p>
 				<ButtonUI
 					onClick={filters.change.clearAll}
-					innerText="Очистить"
+					children="Очистить"
 					type="button"
 					className="bg-transparent text-blue-400 underline font-light text-sm"
 				/>

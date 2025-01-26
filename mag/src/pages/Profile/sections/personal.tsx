@@ -87,7 +87,7 @@ const Personal = observer(() => {
 					className="w-1/2 p-2 mt-4"
 					form="personal"
 					type="submit"
-					innerText="Сохранить"
+					children="Сохранить"
 				/>
 			</div>
 		</>

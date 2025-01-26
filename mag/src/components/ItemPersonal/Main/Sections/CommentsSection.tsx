@@ -77,7 +77,7 @@ const CommentsSection = () => {
 					</form>
 					<ButtonUI
 						className="w-full mt-4 text-blue-500 bg-white border-2 border-blue-500 py-3"
-						innerText="Отправить"
+						children="Отправить"
 						form="commentForm"
 					/>
 				</aside>

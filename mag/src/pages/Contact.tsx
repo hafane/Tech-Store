@@ -39,7 +39,7 @@ const Contact = () => {
 						type="text"
 					/>
 					<TextareaUI placeholder="Сообщение" classNames="h-40" />
-					<ButtonUI className="w-1/2 self-end p-3" innerText="Отправить" />
+					<ButtonUI className="w-1/2 self-end p-3" children="Отправить" />
 				</div>
 			</div>
 		</div>

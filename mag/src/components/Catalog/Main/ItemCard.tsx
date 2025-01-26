@@ -42,9 +42,9 @@ const ItemCard = ({
 				<ButtonUI
 					disabled={available === 0 || User.isAuth === false}
 					onClick={buttonClick}
-					innerText="Купить"
+					children="Купить"
 					type="button"
-					className="bg-blue-400 text-white p-1 disabled:cursor-not-allowed opacity-0 disabled:bg-blue-400/20 group-hover:opacity-100"
+					className={`bg-blue-400 text-white p-1 disabled:opacity-0 opacity-0 ${available === 0 || User.isAuth === false ? "group-hover:opacity-50" : "group-hover:opacity-100" }`}
 				/>
 			</div>
 		</div>

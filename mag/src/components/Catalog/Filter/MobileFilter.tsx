@@ -10,9 +10,9 @@ const MobileFilter = () => {
 		<>
 			<div className="flex px-2 py-3">
 				<ButtonUI
-					className="flex shadow-md px-1 py-2 rounded-lg w-44 max-w-44 items-center gap-2 bg-white text-black"
+					className="shadow-md px-1 py-2 rounded-lg w-44 max-w-44 gap-2 bg-white text-black"
 					onClick={() => setOpenFilter(!openFilter)}
-					innerText="Фильтры"
+					children="Фильтры"
                     Icon={LuSettings2}
 				/>
 			</div>

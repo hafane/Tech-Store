@@ -29,9 +29,9 @@ const CartAside = observer(() => {
 			<ButtonUI
                 form="cartForm"
                 type="submit"
-				disabled={Order.isLoading}
-				className="mt-5 p-4 disabled:opacity-50 disabled:cursor-not-allowed"
-				innerText={Order.isLoading ? "Загрузка..." : "Оформить заказ"}
+				loading={Order.isLoading}
+				className="mt-5 p-4"
+				children={"Оформить заказ"}
 			/>
 		</div>
 	)

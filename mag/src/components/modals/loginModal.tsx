@@ -1,23 +1,17 @@
 import { useForm } from "react-hook-form"
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { User } from "../../store/userStore"
-import { validateRules } from "../../utils/constants/validateConstants"
+import {
+	AuthModalConfig,
+	TAuthModalConfigForm,
+} from "../../utils/constants/FormInputConstants"
 import ModalLayout from "../layouts/modalLayout"
 import Tabs from "./loginComponents/Tabs"
 import InputTextUI from "../ui/InputTextUI"
 import ButtonUI from "../ui/ButtonUI"
-import { LuKeyRound } from "react-icons/lu"
-import { MdOutlineMailOutline } from "react-icons/md"
-import { FiUser } from "react-icons/fi"
 
 type props = {
 	setIsModal: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-type TUseForm = {
-	username: string
-	password: string
-	email: string
 }
 
 const LoginModal = ({ setIsModal }: props) => {
@@ -27,14 +21,14 @@ const LoginModal = ({ setIsModal }: props) => {
 		handleSubmit,
 		reset,
 		register,
-	} = useForm<TUseForm>()
+	} = useForm<TAuthModalConfigForm>()
 
 	const handleCloseModal = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 		setIsModal(false)
 	}
 
-	const OnSubmit = async (data: TUseForm) => {
+	const OnSubmit = async (data: TAuthModalConfigForm) => {
 		const user =
 			isPage === "registration"
 				? await User.registerUser(data.username, data.email, data.password)
@@ -57,44 +51,38 @@ const LoginModal = ({ setIsModal }: props) => {
 				id="authForm"
 				name="authForm"
 			>
-				<InputTextUI
-					classNames="text-zinc-400 border-zinc-300"
-					iconClasses="text-zinc-400"
-					Icon={FiUser}
-					placeholder="Логин"
-					type="text"
-					register={register("username", validateRules.username)}
-				/>
-				{isPage === "registration" && (
-					<InputTextUI
-						classNames="text-zinc-400 border-zinc-300"
-						iconClasses="text-zinc-400"
-						Icon={MdOutlineMailOutline}
-						placeholder="Почта"
-						register={register("email", validateRules.email)}
-						type="email"
-					/>
-				)}
-				<InputTextUI
-					classNames="text-zinc-400 border-zinc-300"
-					iconClasses="text-zinc-400"
-					Icon={LuKeyRound}
-					placeholder="Пароль"
-					register={register("password", validateRules.password)}
-					type="password"
-				/>
-				{errors.password && (
-					<p className="text-red-500">{errors.password.message}</p>
-				)}
-				{(errors.username || errors.email) && (
-					<p className="text-red-500">
-						{errors.email?.message || errors.username?.message}
-					</p>
-				)}
+				{AuthModalConfig.map(item => (
+					<Fragment key={item.name}>
+						{isPage === "registration" && item.name === "email" ? (
+							<InputTextUI
+								classNames="text-zinc-400 border-zinc-300"
+								iconClasses="text-zinc-400"
+								Icon={item.Icon}
+								placeholder={item.placeholder}
+								register={register(item.name, item.validate)}
+								type={item.type}
+							/>
+						) : item.name !== "email" && (
+							<InputTextUI
+								classNames="text-zinc-400 border-zinc-300"
+								iconClasses="text-zinc-400"
+								Icon={item.Icon}
+								placeholder={item.placeholder}
+								register={register(item.name, item.validate)}
+								type={item.type}
+							/>
+						)}
+						{errors[item.name as keyof TAuthModalConfigForm] && (
+							<p className="w-96 text-red-500">
+								{errors[item.name as keyof TAuthModalConfigForm]!.message}
+							</p>
+						)}
+					</Fragment>
+				))}
 			</form>
 			<ButtonUI
 				className="px-5 py-2 w-full"
-				innerText={isPage === "registration" ? "Регистрация" : "Войти"}
+				children={isPage === "registration" ? "Регистрация" : "Войти"}
 				form="authForm"
 				type="submit"
 			/>

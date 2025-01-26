@@ -1,5 +1,9 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import {
+	ItemAddModalConfig,
+	TItemAddModalForm,
+} from "../../utils/constants/FormInputConstants"
 import { createItem } from "../../services/itemServices"
 import ModalLayout from "../layouts/modalLayout"
 import ButtonUI from "../ui/ButtonUI"
@@ -16,22 +20,12 @@ type TInfo = {
 	description?: string
 }
 
-type TForm = {
-	name: string
-	price: string
-	available: string
-	categoryId: string
-	brandId: string
-	images: File[]
-	info: string
-}
-
 const ItemAddModal = ({ setIsModal }: props) => {
 	const {
 		formState: { errors },
 		handleSubmit,
 		register,
-	} = useForm<TForm>()
+	} = useForm<TItemAddModalForm>()
 	const [info, setInfo] = useState<TInfo>({
 		title: "",
 		description: "",
@@ -52,7 +46,7 @@ const ItemAddModal = ({ setIsModal }: props) => {
 		setInfoArr(infoArr.filter((_, i) => i !== index))
 	}
 
-	const onSubmit = (data: TForm) => {
+	const onSubmit = (data: TItemAddModalForm) => {
 		const formdata = new FormData()
 		formdata.append("info", JSON.stringify(infoArr))
 		Array.from(data.images).forEach(item => {
@@ -85,50 +79,32 @@ const ItemAddModal = ({ setIsModal }: props) => {
 					className="space-y-2"
 					method="POST"
 				>
-					<InputTextUI
-						register={register("name", { required: true })}
-						placeholder="Название"
-					/>
-					{errors.name && (
-						<p className="text-red-500 font-xs">Поле обязательно</p>
-					)}
-					<InputTextUI
-						register={register("price", { required: true })}
-						placeholder="Цена"
-					/>
-					{errors.price && (
-						<p className="text-red-500 font-xs">Поле обязательно</p>
-					)}
-					<InputTextUI
-						register={register("available", { required: true })}
-						placeholder="Количество"
-					/>
-					{errors.available && (
-						<p className="text-red-500 font-xs">Поле обязательно</p>
-					)}
-					<InputTextUI
-						register={register("brandId", { required: true })}
-						placeholder="Id бренда"
-					/>
-					{errors.brandId && (
-						<p className="text-red-500 font-xs">Поле обязательно</p>
-					)}
-					<InputTextUI
-						register={register("categoryId", { required: true })}
-						placeholder="Id категории"
-					/>
-					{errors.categoryId && (
-						<p className="text-red-500 font-xs">Поле обязательно</p>
-					)}
-					<InputTextUI
-						register={register("images", { required: true })}
-						type="file"
-						multiple
-						placeholder="Изображение"
-					/>
-					{errors.images && (
-						<p className="text-red-500 font-xs">Поле обязательно</p>
-					)}
+					{ItemAddModalConfig.map((item, index) => (
+						<label key={index} htmlFor={item.name}>
+							<span className="ml-3 text-sm font-light text-zinc-500">
+								{item.title}
+							</span>
+							{item.type === "file" ? (
+								<InputTextUI
+									id={item.name}
+									register={register(item.name, item.validate)}
+									type={item.type}
+									multiple
+									placeholder="Изображение"
+								/>
+							) : (
+								<InputTextUI
+									id={item.name}
+									register={register(item.name, item.validate)}
+									type={item.type}
+									placeholder={item.placeholder}
+								/>
+							)}
+							{errors[item.name as keyof TItemAddModalForm] && (
+								<p className="text-red-500 font-xs">Поле обязательно</p>
+							)}
+						</label>
+					))}
 				</form>
 				<div>
 					<span className="flex space-x-2">
@@ -145,7 +121,7 @@ const ItemAddModal = ({ setIsModal }: props) => {
 						<ButtonUI
 							onClick={handleAddInfo}
 							className="px-4 py-2"
-							innerText="+"
+							children="+"
 						/>
 					</span>
 					<ul>
@@ -161,7 +137,7 @@ const ItemAddModal = ({ setIsModal }: props) => {
 							))}
 					</ul>
 				</div>
-				<ButtonUI form="itemAdd" className="w-full p-2" innerText="Добавить" />
+				<ButtonUI form="itemAdd" className="w-full p-2" children="Добавить" />
 			</div>
 		</ModalLayout>
 	)
