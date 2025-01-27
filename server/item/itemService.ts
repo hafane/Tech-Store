@@ -47,6 +47,26 @@ class ItemService {
 		const skipNum = page! > 0 ? (page! - 1) * takeNum : 0
 		const categoryArr = Array.from(new Set(category?.split(",")))
 		const brandArr = Array.from(new Set(brand?.split(",")))
+		const allCount = await prisma.item.count({
+			where: {
+				...(category && { category: { name: { in: categoryArr } } }),
+				...(brand && { brand: { name: { in: brandArr } } }),
+				...(priceFrom &&
+					priceTo && {
+						price: { gte: Number(priceFrom), lte: Number(priceTo) },
+					}),
+				...((available === "В наличии" && {
+					available: {
+						gte: 1,
+					},
+				}) ||
+					(available === "Отсутствуют" && {
+						available: {
+							equals: 0,
+						},
+					})),
+			},
+		})
 		const items = await prisma.item.findMany({
 			where: {
 				...(category && { category: { name: { in: categoryArr } } }),
@@ -68,12 +88,13 @@ class ItemService {
 			},
 			skip: skipNum,
 			take: takeNum,
-			...((sort === "price" && {orderBy: {price: "asc"}}) || (sort === "name" && {orderBy: {name: "asc"}})),
+			...((sort === "price" && { orderBy: { price: "asc" } }) ||
+				(sort === "name" && { orderBy: { name: "asc" } })),
 		})
 		if (!items) {
 			throw SetError.NotFoundException("Не удалось получить список товаров.")
 		}
-		return {items}
+		return { items, allCount }
 	}
 
 	async searchItems(word: string) {

@@ -3,6 +3,7 @@ import { TCategory } from "../categoryServices"
 
 export type IFetchedItem = {
 	items: IFetchedItemBrand[]
+	allCount: number
 }
 
 export type IGetAllItems = {

@@ -6,12 +6,15 @@ import { NavbarLinks } from "../../../utils/constants/NavbarConsts"
 import ItemCard from "./ItemCard"
 import Pagination from "../Pagination/Pagination"
 import Sort from "../SortSection/Sort"
+import Loading from "../../Loading"
 
 const ItemsSection = observer(() => {
 	const {isMobile} = useDeviceDetect()
 	const handleAddToCart = async (id: number) => {
 		await Cart.setItemCart(id)
 	}
+
+	if(Item.loading) return <Loading loaderSize={60} />
 
 	return (
 		<section className="md:col-span-10">

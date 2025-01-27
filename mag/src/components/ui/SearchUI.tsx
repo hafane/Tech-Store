@@ -1,8 +1,8 @@
-import React from "react"
+import { ComponentProps } from "react"
 import { FiSearch } from "react-icons/fi"
 import { twMerge } from "tailwind-merge"
 
-interface props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface props extends ComponentProps<"input"> {
     fieldsetClass?: string
     inpClass?: string
 }

@@ -39,70 +39,74 @@ class CartItemService {
 	}
 
 	async updateItemQuantity(cartId: number, dto: UpdateItemQuantity) {
-		const foundCartItem = await prisma.cartItem.findFirst({
-			where: {
-				cartId: cartId,
-				itemId: dto.itemId,
-			}
-		})
-		if (foundCartItem) {
-			await prisma.cartItem.update({
+		return prisma.$transaction(async prisma => {
+			const foundCartItem = await prisma.cartItem.findFirst({
 				where: {
-					id: foundCartItem.id,
-				},
-				data: {
-					quantity: dto.quantity,
+					cartId: cartId,
+					itemId: dto.itemId,
 				},
 			})
-		} else {
-			throw SetError.NotFoundException("Товар не найден.")
-		}
-		const updatedCartAmount = await cartService.updateCart(cartId)
-		return updatedCartAmount
+			if (foundCartItem) {
+				await prisma.cartItem.update({
+					where: {
+						id: foundCartItem.id,
+					},
+					data: {
+						quantity: dto.quantity,
+					},
+				})
+			} else {
+				throw SetError.NotFoundException("Товар не найден.")
+			}
+			const updatedCartAmount = await cartService.updateCart(cartId)
+			return updatedCartAmount
+		})
 	}
 
 	async deleteItemFromAllCarts(itemId: number) {
-		const carts = await prisma.cart.findMany({
-			where: {
-				CartItem: {
-					some: {
-						itemId: itemId,
+		return prisma.$transaction(async prisma => {
+			const carts = await prisma.cart.findMany({
+				where: {
+					CartItem: {
+						some: {
+							itemId: itemId,
+						},
 					},
 				},
-			},
-			include: {
-				CartItem: {
+				include: {
+					CartItem: {
+						where: {
+							itemId: itemId,
+						},
+						include: {
+							Item: true,
+						},
+					},
+				},
+			})
+			if (!carts) {
+				throw SetError.NotFoundException("Корзины не найдены.")
+			}
+			for (const cart of carts) {
+				await prisma.cartItem.deleteMany({
 					where: {
-						itemId: itemId,
+						itemId: cart.CartItem[0].itemId,
+						cartId: cart.id,
 					},
-					include: {
-						Item: true,
+				})
+				await prisma.cart.update({
+					where: {
+						id: cart.id,
 					},
-				},
-			},
+					data: {
+						totalAmount:
+							cart.totalAmount -
+							cart.CartItem[0].quantity * cart.CartItem[0].Item.price,
+					},
+				})
+			}
+			return
 		})
-		if (!carts) {
-			throw SetError.NotFoundException("Корзины не найдены.")
-		}
-		for (const cart of carts) {
-			await prisma.cartItem.deleteMany({
-				where: {
-					itemId: cart.CartItem[0].itemId,
-					cartId: cart.id,
-				},
-			})
-			await prisma.cart.update({
-				where: {
-					id: cart.id,
-				},
-				data: {
-					totalAmount:
-						cart.totalAmount -
-						cart.CartItem[0].quantity * cart.CartItem[0].Item.price,
-				},
-			})
-		}
-		return
 	}
 
 	async deleteOneItemFromCart(dto: DeleteItemDTO, cartId: number) {

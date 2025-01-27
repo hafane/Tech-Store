@@ -1,7 +1,18 @@
-const Loading = () => {
-    return (
-        <div className="w-16 h-16 border-b-2 rounded-full animate-spin"></div>
-    );
+import { BiLoader } from "react-icons/bi"
+
+type props = {
+	loaderSize?: number
+	spinnerColor?: "lightblue" | "lightgreen" | "red"
 }
 
-export default Loading;
+const Loading = ({ loaderSize = 20, spinnerColor = "lightblue" }: props) => {
+	return (
+		<BiLoader
+            fill={spinnerColor}
+			className="animate-spin"
+			size={loaderSize}
+		/>
+	)
+}
+
+export default Loading

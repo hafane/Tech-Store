@@ -4,6 +4,7 @@ import { FetchItemApi, ISearchItem, SearchItemsApi, getOneItem, IGetAllItems, TF
 
 class ItemStore {
     listItems = [] as IGetAllItems[]
+    loading = false
     listItemsCount = 15 as number
     searchedItems = [] as ISearchItem[]
     oneItem = {} as TFetchedOneItem
@@ -28,11 +29,16 @@ class ItemStore {
         return this.listItemsCount = count
     }
 
+    private setLoading = (bool: boolean) => {
+        return this.loading = bool
+    }
+
     fetchItems = async (page: number, category?: string, brand?: string, available?: string, priceFrom?: number, priceTo?: number, sort?: string) => {
         try {
+            this.setLoading(true)
             const items = await FetchItemApi(category, brand, available, priceFrom, priceTo, page, sort)
             this.setItems(items.data.items)
-            items.data.items.length >= 14 && this.setCount(items.data.items.length)
+            this.setCount(items.data.allCount)
             return true
         } catch (error) {
             if(error instanceof AxiosError) {
@@ -40,6 +46,8 @@ class ItemStore {
 			} else {
 				console.log("Произошла ошибка при получении каталога товаров.")
 			}
+        } finally {
+            this.setLoading(false)
         }
     }
 

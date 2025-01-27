@@ -10,6 +10,7 @@ type props = {
 	id: number
 	categoryId: number
 	brandId: number
+	itemId: number
 }
 
 const ListItem = ({
@@ -20,6 +21,7 @@ const ListItem = ({
 	id,
 	categoryId,
 	brandId,
+	itemId
 }: props) => {
 
     const handleDelete = async (id: number) => {
@@ -59,6 +61,10 @@ const ListItem = ({
 				<div className="flex justify-between md:block">
 					Id бренда
 					<p>{brandId}</p>
+				</div>
+				<div className="flex justify-between md:block">
+					Id товара
+					<p>{itemId}</p>
 				</div>
 			</div>
 			<div>

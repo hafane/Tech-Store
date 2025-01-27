@@ -1,7 +1,8 @@
+import { ComponentProps } from 'react'
 import { UseFormRegisterReturn } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
 
-interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface Props extends ComponentProps<"textarea"> {
     placeholder: string
     classNames?: string
     register?: UseFormRegisterReturn

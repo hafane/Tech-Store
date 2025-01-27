@@ -1,6 +1,6 @@
+import { User } from "../../../store/userStore"
 import { Link } from "react-router-dom"
 import ButtonUI from "../../ui/ButtonUI"
-import { User } from "../../../store/userStore"
 
 interface props {
 	image: string[]

@@ -25,7 +25,7 @@ const AllItemsSection = observer(() => {
 			</span>
 			<ul className="space-y-4">
 				{Item.listItems.map(item => (
-					<ListItem key={item.id} available={item.available} price={item.price} name={item.name} image={item.image} id={item.id} brandId={item.brandId} categoryId={item.categoryId} />
+					<ListItem key={item.id} available={item.available} price={item.price} name={item.name} image={item.image} id={item.id} brandId={item.brandId} categoryId={item.categoryId} itemId={item.id} />
 				))}
 			</ul>
 			{isModal && <ItemAddModal setIsModal={() => setIsModal(false)} />}

@@ -9,13 +9,13 @@ const Pagination = observer(() => {
 		change: { setPage },
 	} = useFilterContext()
 	const itemsPerPage = 15
-	const pageFromCount = Math.ceil((Item.listItemsCount + 1) / itemsPerPage)
+	const pageFromCount = Math.ceil(Item.listItemsCount / itemsPerPage) 
 
 	return (
 		<div className="flex justify-center mb-12">
 			<ul className="flex gap-3 items-center">
 				<li
-					className={page < pageFromCount ? "hidden" : "block"}
+					className={page < pageFromCount || page === 1 ? "hidden" : "block"}
 					title="Назад"
 					role="button"
 					onClick={() => setPage(prev => prev - 1)}

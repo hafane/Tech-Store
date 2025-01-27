@@ -9,12 +9,11 @@ const prisma = new PrismaClient()
 
 class CartService {
 	async createUserCart(userId: number) {
-		const cart = await prisma.cart.create({
+		return await prisma.cart.create({
 			data: {
 				userId: userId,
 			},
 		})
-		return
 	}
 
 	async userCartExists(userId: number) {

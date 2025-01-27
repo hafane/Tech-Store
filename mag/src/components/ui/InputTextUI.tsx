@@ -1,7 +1,8 @@
+import { ComponentProps } from "react"
 import { UseFormRegisterReturn } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
 
-interface props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface props extends ComponentProps<"input"> {
     Icon?: React.FC<React.SVGProps<SVGSVGElement>>
 	register?: UseFormRegisterReturn
 	classNames?: string
