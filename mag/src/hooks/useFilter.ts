@@ -22,9 +22,9 @@ interface ReturnType extends Filters {
 	change: {
 		toggleBrand: (brand: string) => void
 		toggleAvailable: (available: string) => void
-		togglePrice: (name: keyof PriceType, value: number) => void
+		togglePrice: (name: keyof PriceType, value: number | undefined) => void
 		clearAll: () => void
-        setCategory: (category: string) => void
+        setCategory: (category?: string) => void
         setPage: React.Dispatch<React.SetStateAction<number>>
 		setSort: (sort: string) => void
 	}
@@ -66,7 +66,7 @@ export const UseFilter = (): ReturnType => {
 		setPrices({ priceFrom: undefined, priceTo: undefined })
 	}
 
-	const updatePrice = (name: keyof PriceType, value: number) => {
+	const updatePrice = (name: keyof PriceType, value: number | undefined) => {
 		setPrices(prev => ({ ...prev, [name]: value }))
 	}
 

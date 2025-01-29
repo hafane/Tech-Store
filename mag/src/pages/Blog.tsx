@@ -5,7 +5,7 @@ import { LuTimer } from "react-icons/lu"
 const Blog = () => {
 	return (
 		<div>
-			<div className="container block sm:grid sm:grid-cols-2 sm:gap-6 max-w-[1200px] mx-auto">
+			<div className="container block space-y-2 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 max-w-[1200px] mx-auto">
 				{Blogs.map(blog => (
 					<article className="bg-white rounded-b-md shadow-md" key={blog.id}>
 						<img
@@ -28,7 +28,7 @@ const Blog = () => {
                                 </span>
 							</div>
 							<h1 className="text-lg font-bold">{blog.title}</h1>
-							<p className="font-light">{blog.description}</p>
+							<p className="font-light max-h-12 overflow-hidden line-clamp-2">{blog.description}</p>
 						</div>
 					</article>
 				))}
