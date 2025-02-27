@@ -15,7 +15,7 @@ type TForm = {
 }
 
 const Personal = observer(() => {
-	const {formState: {errors}, handleSubmit, register, reset, setError} = useForm<TForm>()
+	const {formState: {errors, isSubmitting}, handleSubmit, register, reset, setError} = useForm<TForm>()
 
 	const userData = User.user
 
@@ -83,7 +83,7 @@ const Personal = observer(() => {
 					{errors.root && <span className="text-red-500">{errors.root.message}</span>}
 				</form>
 				<ButtonUI
-					disabled={!userData.activation}
+					disabled={!userData.activation || isSubmitting}
 					className="w-1/2 p-2 mt-4"
 					form="personal"
 					type="submit"

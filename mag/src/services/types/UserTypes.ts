@@ -13,3 +13,11 @@ export type UserDataToken = {
 export type UserActivateMessage = {
     message: string
 }
+
+export type UserCreateResetResponse = {
+    message: string
+}
+
+export type UserResetPasswordResponse = {
+    message: string
+}

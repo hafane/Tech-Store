@@ -1,4 +1,4 @@
-import { BiLoader } from "react-icons/bi"
+import {BiLoader} from "react-icons/bi"
 
 type props = {
 	loaderSize?: number
@@ -8,9 +8,9 @@ type props = {
 const Loading = ({ loaderSize = 20, spinnerColor = "lightblue" }: props) => {
 	return (
 		<BiLoader
-            fill={spinnerColor}
-			className="animate-spin"
-			size={loaderSize}
+				fill={spinnerColor}
+				className="animate-spin"
+				size={loaderSize}
 		/>
 	)
 }

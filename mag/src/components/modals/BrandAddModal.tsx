@@ -35,7 +35,7 @@ const BrandAddModal = ({setIsModal}: props) => {
                     <InputTextUI register={register("name", {required: true})} type="text" placeholder="Название" />
                     {errors.name && <span className="text-red-500">Поле обязательно</span>}
                 </form>
-                <ButtonUI className="mt-4 w-full py-2" form="createBrand" innerText="Добавить" role="button" type="submit" />
+                <ButtonUI className="mt-4 w-full py-2" form="createBrand" children="Добавить" role="button" type="submit" />
             </div>
         </ModalLayout>
     );

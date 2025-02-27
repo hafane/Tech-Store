@@ -5,7 +5,7 @@ const Tabs = ({
 	setIsPage,
 }: {
 	isPage: string
-	setIsPage: Dispatch<React.SetStateAction<"login" | "registration">>
+	setIsPage: Dispatch<React.SetStateAction<"login" | "registration" | "reset">>
 }) => {
 	return (
 		<div className="flex [&>span]:w-[calc(100%/2)] [&>span]:border-b-2 [&>span]:cursor-pointer">

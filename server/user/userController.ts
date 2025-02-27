@@ -1,10 +1,9 @@
 import { Response, Request, NextFunction } from "express"
 import UserService from "./userService"
-import {
-	IActivate,
-} from "../types/userTypes"
+import { IActivate, ICheckToken, ICreateReset } from "../types/userTypes"
 import { ChangePersonalDTO } from "./dto/changePersonalDTO"
 import { DTOValidation } from "../utils/DTOValidation"
+import { ResetPasswordDTO } from "./dto/resetPasswordDTO"
 
 class UserController {
 	async getUsers(req: Request, res: Response, next: NextFunction) {
@@ -16,11 +15,7 @@ class UserController {
 		}
 	}
 
-	async changePersonal(
-		req: Request,
-		res: Response,
-		next: NextFunction
-	) {
+	async changePersonal(req: Request, res: Response, next: NextFunction) {
 		try {
 			const dto = new ChangePersonalDTO(req.body)
 			await DTOValidation(dto, "Произошла ошибка при валидации данных.")
@@ -55,14 +50,12 @@ class UserController {
 		try {
 			const { link } = req.params
 			const activation = await UserService.activate(link)
-			res
-				.status(200)
-				.send(
-					`<div style="width: 1024px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+			res.status(200).send(
+				`<div style="width: 1024px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
 						<h1>${activation.message}</h1>
 						<button style="margin-top: 20px; padding: 10px; border-radius: 5px; border: none; background-color: #4CAF50;" type="submit"><a style="text-decoration: none; color: white;" href="http://localhost:3000/">Вернуться на главную</a></button>
 					</div>`
-				)
+			)
 		} catch (e) {
 			next(e)
 		}
@@ -73,6 +66,42 @@ class UserController {
 			const { userId } = req.params
 			const newAdmin = await UserService.setUserAsAdmin(Number(userId))
 			res.status(200).json(newAdmin)
+		} catch (error) {
+			next(error)
+		}
+	}
+
+	async createResetLink(req: Request, res: Response, next: NextFunction) {
+		try {
+			const { email } = req.body
+			const reset = await UserService.createResetLink(email)
+			res.status(201).json(reset)
+		} catch (error) {
+			next(error)
+		}
+	}
+
+	async checkResetTokenForExpired(
+		req: ICheckToken,
+		res: Response,
+		next: NextFunction
+	) {
+		try {
+			const { token } = req.params
+			const checked = await UserService.checkToken(token)
+			res.status(200).json(checked)
+		} catch (error) {
+			next(error)
+		}
+	}
+
+	async ResetPassword(req: ICreateReset, res: Response, next: NextFunction) {
+		try {
+			const dto = new ResetPasswordDTO(req.body)
+			await DTOValidation(dto, "Произошла ошибка при валидации данных.")
+			const { link } = req.params
+			const reset = await UserService.resetUserPassword(link, dto)
+			res.status(200).json(reset)
 		} catch (error) {
 			next(error)
 		}

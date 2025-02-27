@@ -35,7 +35,7 @@ const CategoryAddModal = ({setIdModal}: props) => {
                     <InputTextUI register={register('name', {required: true})} placeholder='Название' type='text' />
                     {errors.name && <span className='text-red-500'>Поле обязательно</span>}
                 </form>
-                <ButtonUI form='createCategory' className='mt-4 w-full py-2' innerText='Добавить' type='submit' />
+                <ButtonUI form='createCategory' className='mt-4 w-full py-2' children='Добавить' type='submit' />
             </div>
         </ModalLayout>
     );

@@ -1,7 +1,7 @@
-import { createBrowserRouter, Link } from "react-router-dom"
-import { RouteError } from "./routeError"
-import { Item as ItemStore } from "../store/itemStore"
-import { Cart as CartStore } from "../store/cartStore"
+import {createBrowserRouter, Link} from "react-router-dom"
+import {RouteError} from "./routeError"
+import {Item as ItemStore} from "../store/itemStore"
+import {Cart as CartStore} from "../store/cartStore"
 import Root from "./root"
 import Cart from "../pages/Cart"
 import PrivateRoutes from "./privateRoutes"
@@ -15,10 +15,12 @@ import Personal from "../pages/Profile/sections/personal"
 import Admin from "../pages/Profile/sections/admin"
 import Orders from "../pages/Profile/sections/orders"
 import Checkout from "../pages/Checkout"
-import { paymentCallback } from "../services/paymentServices"
+import {paymentCallback} from "../services/paymentServices"
 import FAQ from "../pages/FAQ"
 import Blog from "../pages/Blog"
-import { FilterProvider } from "../context/filterContext"
+import {FilterProvider} from "../context/filterContext"
+import NewPassword from "../pages/NewPassword"
+import {User} from "../store/userStore"
 
 export const router = createBrowserRouter([
 	{
@@ -132,6 +134,15 @@ export const router = createBrowserRouter([
 					</PrivateRoutes>
 				),
 			},
+			{
+				path: "/reset-password/:token",
+				element: <NewPassword/>,
+				loader: async ({params}) => {
+					if (params.token) {
+						return await User.checkResetToken(params.token)
+					}
+				}
+			}
 		],
 	},
 ])

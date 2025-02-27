@@ -1,9 +1,5 @@
 import { InputHTMLAttributes } from "react"
 import { RegisterOptions } from "react-hook-form"
-import { IconType } from "react-icons"
-import { FiUser } from "react-icons/fi"
-import { LuKeyRound } from "react-icons/lu"
-import { MdOutlineMailOutline } from "react-icons/md"
 
 export const validateRules = {
 	username: {
@@ -17,14 +13,25 @@ export const validateRules = {
 			message: "Неверный формат почты.",
 		},
 	},
-	password: {
+	registerPassword: {
 		required: "Пароль обязателен.",
 		pattern: {
 			value: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])/g,
 			message:
 				"Пароль должен содержать минимум одну заглавную букву, одну строчную букву, одну цифру и один спецсимвол.",
 		},
+		minLength: {
+			value: 8,
+			message: "Минимальная длина пароля 8 символов.",
+		},
+		maxLength: {
+			value: 24,
+			message: "Максимальная длина пароля 24 символа.",
+		}
 	},
+	loginPassword: {
+		required: "Пароль обязателен.",
+	}
 }
 
 export const validateOrderRules = {
@@ -127,45 +134,5 @@ export const ItemAddModalConfig: TItemAddModalConfig[] = [
 		name: "images",
 		validate: { required: true },
 		type: "file",
-	},
-]
-
-export type TAuthModalConfigForm = {
-	username: string
-	password: string
-	email: string
-}
-
-interface TAuthModalConfig extends InputHTMLAttributes<HTMLInputElement> {
-	placeholder: string
-	Icon: IconType
-	name: "username" | "password" | "email"
-	validate: RegisterOptions<
-		TAuthModalConfigForm,
-		"username" | "password" | "email"
-	>
-}
-
-export const AuthModalConfig: TAuthModalConfig[] = [
-	{
-		placeholder: "Логин",
-		Icon: FiUser,
-		name: "username",
-		validate: validateRules.username,
-        type: "text",
-	},
-	{
-		placeholder: "Почта",
-		Icon: MdOutlineMailOutline,
-		name: "email",
-		validate: validateRules.email,
-        type: "email",
-	},
-	{
-		placeholder: "Пароль",
-		Icon: LuKeyRound,
-		name: "password",
-		validate: validateRules.password,
-        type: "password",
 	},
 ]

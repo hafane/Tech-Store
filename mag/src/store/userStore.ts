@@ -10,6 +10,7 @@ import {
 	CreateActivateLink,
 } from "../services"
 import toast from "react-hot-toast"
+import { checkToken, CreateResetLink, ResetPassword } from "../services/userServices"
 
 type UserData = {
 	id: number
@@ -148,6 +149,48 @@ class UserStore {
 				toast.error(error.response?.data.message)
 			} else {
 				toast.error("Произошла ошибка при отправке ссылки активации.")
+			}
+		}
+	}
+
+	createResetLink = async (email: string) => {
+		try {
+			const res = await CreateResetLink(email)
+			return toast.success(res.data.message)
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при отправке ссылки восстановления.")
+			}
+		}
+	}
+
+	checkResetToken = async (token: string) => {
+		try {
+			const res = await checkToken(token)
+			return res
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				return {
+					status: false,
+					message: error.response?.data.message
+				}
+			} else {
+				console.log("Произошла ошибка при восстановлении пароля.")
+			}
+		}
+	}
+
+	resetPassword = async (token: string, newPassword: string, repeatPassword: string) => {
+		try {
+			const res = await ResetPassword(token, newPassword, repeatPassword)
+			return toast.success(res.data.message)
+		} catch (error) {
+			if(error instanceof AxiosError) {
+				toast.error(error.response?.data.message)
+			} else {
+				toast.error("Произошла ошибка при восстановлении пароля.")
 			}
 		}
 	}

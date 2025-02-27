@@ -1,11 +1,15 @@
 import {PrismaClient} from "@prisma/client"
 import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
-import { ChangePersonalDTO } from "./dto/changePersonalDTO"
-import {createTokensAndGetUser, IPromise} from "../utils/createTokensAndGetUser";
+import {ChangePersonalDTO} from "./dto/changePersonalDTO"
+import {
+    createTokensAndGetUser,
+    IPromise
+} from "../utils/createTokensAndGetUser";
 import MailService from "../mail/mailService";
 import SetError from "../Errors/SetError";
 import ActivationService from "../activation/activationService";
+import {ResetPasswordDTO} from "./dto/resetPasswordDTO"
 
 const prisma = new PrismaClient();
 
@@ -93,6 +97,79 @@ class UserService {
             throw SetError.BadRequestException("Не удалось установить роль администратора.")
         }
         return {message: "Роль администратора была установлена."}
+    }
+
+    async createResetLink(email: string) {
+        const foundUser = await prisma.user.findFirst({
+            where: {
+                email: email
+            }
+        })
+        if(!foundUser) {
+            throw SetError.BadRequestException("Такой пользователь не существует.")
+        }
+        const createLink = `${foundUser.username}${uuidv4()}`
+        const createdLink = await prisma.passwordReset.create({
+            data: {
+                userId: foundUser.id,
+                resetLink: createLink,
+                expiration: new Date(Date.now() + 60 * 60 * 1000)
+            }
+        })
+        await MailService.sendResetPasswordMail(foundUser.email, createdLink.resetLink)
+        return {message: "Ссылка для восстановления была создана и отправлена на вашу почту."}
+    }
+
+    async checkToken(token: string) {
+        if(!token) {
+            throw SetError.BadRequestException("Вы не ввели ссылку для восстановления.")
+        }
+        const check = await prisma.passwordReset.findFirst({
+            where: {
+                resetLink: token
+            }
+        })
+        if(!check) {
+            throw SetError.BadRequestException("Некорректная ссылка для восстановления.")
+        }
+        if(check.expiration < new Date(Date.now())) {
+            await prisma.passwordReset.deleteMany({
+                where: {
+                    id: check.id
+                }
+            })
+            throw SetError.BadRequestException("Ссылка для восстановления устарела.")
+        }
+        return {message: `Ссылка для восстановления активна до ${check.expiration.getTime()}.`}
+    }
+
+    async resetUserPassword(link: string, dto: ResetPasswordDTO) {
+        const foundLink = await prisma.passwordReset.findFirst({
+            where: {
+                resetLink: link
+            }
+        })
+        if(!foundLink) {
+            throw SetError.BadRequestException("Некорректная ссылка для восстановления.")
+        }
+        if(dto.newPassword !== dto.repeatPassword) {
+            throw SetError.BadRequestException("Пароли не совпадают.")
+        }
+        const hashedPassword = await bcrypt.hash(dto.newPassword, 5)
+        await prisma.user.update({
+            where: {
+                id: foundLink.userId
+            },
+            data: {
+                password: hashedPassword
+            }
+        })
+        await prisma.passwordReset.deleteMany({
+            where: {
+                userId: foundLink.userId
+            }
+        })
+        return {message: "Пароль был успешно изменен."}
     }
 }
 

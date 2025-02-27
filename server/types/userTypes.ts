@@ -14,3 +14,20 @@ export interface IActivate extends Express.Request {
         link: string
     }
 }
+
+
+export interface ICreateReset extends Express.Request {
+    params: {
+        link: string
+    }
+    body: {
+        newPassword: string
+        repeatPassword: string
+    }
+}
+
+export interface ICheckToken extends Express.Request {
+    params: {
+        token: string
+    }
+}

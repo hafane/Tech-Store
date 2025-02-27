@@ -115,6 +115,21 @@ class MailService {
                 `,
         })
     }
+
+	async sendResetPasswordMail(to: string, link: string) {
+		await transporter.sendMail({
+			from: process.env.SMTP_USER,
+			to: to,
+			subject: "Восстановление пароля",
+			text: "",
+			html: `
+				<div>
+					<h1>Здравствуйте ${to}</h1>
+					<p>Перейдите по <a href='http://localhost:3000/reset-password/${link}'>ссылке</a> для восстановления пароля</p>
+				</div>
+			`,
+		})
+	}
 }
 
 export default new MailService()

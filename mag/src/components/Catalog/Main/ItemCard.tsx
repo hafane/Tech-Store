@@ -1,5 +1,5 @@
-import { User } from "../../../store/userStore"
-import { Link } from "react-router-dom"
+import {User} from "../../../store/userStore"
+import {Link} from "react-router-dom"
 import ButtonUI from "../../ui/ButtonUI"
 
 interface props {
@@ -40,11 +40,11 @@ const ItemCard = ({
 			<div className="w-full flex justify-between items-center">
 				<span className="text-lg font-light">{price}&#8381;</span>
 				<ButtonUI
-					disabled={available === 0 || User.isAuth === false}
+					disabled={available === 0 || !User.isAuth}
 					onClick={buttonClick}
 					children="Купить"
 					type="button"
-					className={`bg-blue-400 text-white p-1 disabled:opacity-0 opacity-0 ${available === 0 || User.isAuth === false ? "group-hover:opacity-50" : "group-hover:opacity-100" }`}
+					className={`bg-blue-400 text-white p-1 disabled:opacity-0 opacity-0 ${available === 0 || !User.isAuth ? "group-hover:opacity-50" : "group-hover:opacity-100" }`}
 				/>
 			</div>
 		</div>
